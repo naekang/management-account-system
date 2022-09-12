@@ -2,6 +2,7 @@ package com.naekang.account.service;
 
 import com.naekang.account.domain.Account;
 import com.naekang.account.domain.AccountStatus;
+import com.naekang.account.dto.CreatedAccountDTO;
 import com.naekang.account.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,12 +16,8 @@ public class AccountService {
     private final AccountRepository accountRepository;
 
     @Transactional
-    public void createAccount() {
-        Account account = Account.builder()
-                .accountNumber("40000")
-                .accountStatus(AccountStatus.IN_USE)
-                .build();
-        accountRepository.save(account);
+    public void createAccount(Long userId, Long initialBalance) {
+
     }
 
     @Transactional

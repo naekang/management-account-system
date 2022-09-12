@@ -1,12 +1,13 @@
 package com.naekang.account.controller;
 
 import com.naekang.account.domain.Account;
+import com.naekang.account.dto.CreatedAccountDTO;
 import com.naekang.account.service.AccountService;
 import com.naekang.account.service.RedisTestService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,10 +21,16 @@ public class AccountController {
         return redisTestService.getLock();
     }
 
-    @GetMapping("/create-account")
-    public String createAccount() {
-        accountService.createAccount();
-        return "success";
+    /**
+     * 계좌 생성 API
+     * @URI : /account
+     * @Param: userId, initialBalance
+     */
+    @PostMapping("/account")
+    public CreatedAccountDTO.Response createAccount(
+            @RequestBody @Valid CreatedAccountDTO.Request request
+    ) {
+        accountService.createAccount(request.getUserId(), request.getInitialBalance());
     }
 
     @GetMapping("/account/{id}")
