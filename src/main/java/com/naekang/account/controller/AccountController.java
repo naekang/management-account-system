@@ -1,7 +1,7 @@
 package com.naekang.account.controller;
 
 import com.naekang.account.domain.Account;
-import com.naekang.account.dto.CreatedAccountDTO;
+import com.naekang.account.dto.CreatedAccountDto;
 import com.naekang.account.service.AccountService;
 import com.naekang.account.service.RedisTestService;
 import lombok.RequiredArgsConstructor;
@@ -23,19 +23,22 @@ public class AccountController {
 
     /**
      * 계좌 생성 API
-     * @URI : /account
-     * @Param: userId, initialBalance
      */
     @PostMapping("/account")
-    public CreatedAccountDTO.Response createAccount(
-            @RequestBody @Valid CreatedAccountDTO.Request request
+    public CreatedAccountDto.Response createAccount(
+            @RequestBody @Valid CreatedAccountDto.Request request
     ) {
-        accountService.createAccount(request.getUserId(), request.getInitialBalance());
+
+        return CreatedAccountDto.Response
+                .from(accountService.createAccount(
+                        request.getUserId(),
+                        request.getInitialBalance()
+                ));
     }
 
     @GetMapping("/account/{id}")
     public Account getAccount(
-            @PathVariable Long id){
+            @PathVariable Long id) {
         return accountService.getAccount(id);
     }
 }
