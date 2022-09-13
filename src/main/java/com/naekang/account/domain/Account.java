@@ -1,5 +1,6 @@
 package com.naekang.account.domain;
 
+import com.naekang.account.type.AccountStatus;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;

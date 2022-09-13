@@ -1,4 +1,4 @@
-package com.naekang.account.domain;
+package com.naekang.account.type;
 
 public enum AccountStatus {
     IN_USE,
