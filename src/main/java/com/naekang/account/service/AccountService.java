@@ -80,6 +80,8 @@ public class AccountService {
         account.setAccountStatus(AccountStatus.UNREGISTERED);
         account.setUnregisteredAt(LocalDateTime.now());
 
+        accountRepository.save(account);
+
         return AccountDto.fromEntity(account);
     }
 
