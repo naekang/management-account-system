@@ -2,7 +2,7 @@ package com.naekang.account.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.naekang.account.dto.AccountDto;
-import com.naekang.account.dto.CreatedAccountDto;
+import com.naekang.account.dto.CreateAccountDto;
 import com.naekang.account.service.AccountService;
 import com.naekang.account.service.RedisTestService;
 import org.junit.jupiter.api.Test;
@@ -52,7 +52,7 @@ class AccountControllerTest {
         mockMvc.perform(post("/account")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(
-                                new CreatedAccountDto.Request(1L, 100L)
+                                new CreateAccountDto.Request(1L, 100L)
                         )))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.userId").value(1))

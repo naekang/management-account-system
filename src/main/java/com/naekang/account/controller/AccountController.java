@@ -1,7 +1,8 @@
 package com.naekang.account.controller;
 
 import com.naekang.account.domain.Account;
-import com.naekang.account.dto.CreatedAccountDto;
+import com.naekang.account.dto.CreateAccountDto;
+import com.naekang.account.dto.DeleteAccountDto;
 import com.naekang.account.service.AccountService;
 import com.naekang.account.service.RedisTestService;
 import lombok.RequiredArgsConstructor;
@@ -25,14 +26,26 @@ public class AccountController {
      * 계좌 생성 API
      */
     @PostMapping("/account")
-    public CreatedAccountDto.Response createAccount(
-            @RequestBody @Valid CreatedAccountDto.Request request
+    public CreateAccountDto.Response createAccount(
+            @RequestBody @Valid CreateAccountDto.Request request
     ) {
 
-        return CreatedAccountDto.Response
+        return CreateAccountDto.Response
                 .from(accountService.createAccount(
                         request.getUserId(),
                         request.getInitialBalance()
+                ));
+    }
+
+    @DeleteMapping("/account")
+    public DeleteAccountDto.Response createAccount(
+            @RequestBody @Valid DeleteAccountDto.Request request
+    ) {
+
+        return DeleteAccountDto.Response
+                .from(accountService.deleteAccount(
+                        request.getUserId(),
+                        request.getAccountNumber()
                 ));
     }
 
