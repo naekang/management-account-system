@@ -1,6 +1,6 @@
 package com.naekang.account.controller;
 
-import com.naekang.account.domain.Account;
+import com.naekang.account.dto.AccountInfoDto;
 import com.naekang.account.dto.CreateAccountDto;
 import com.naekang.account.dto.DeleteAccountDto;
 import com.naekang.account.service.AccountService;
@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -49,9 +51,15 @@ public class AccountController {
                 ));
     }
 
-    @GetMapping("/account/{id}")
-    public Account getAccount(
-            @PathVariable Long id) {
-        return accountService.getAccount(id);
+    @GetMapping("/account")
+    public List<AccountInfoDto> getAccountByUserId(
+            @RequestParam("user_id") Long userId
+    ) {
+        return accountService.getAccountByUserId(userId)
+                .stream().map(accountDto -> AccountInfoDto.builder()
+                        .accountNumber(accountDto.getAccountNumber())
+                        .balance(accountDto.getBalance())
+                        .build())
+                .collect(Collectors.toList());
     }
 }
