@@ -38,6 +38,5 @@ public class CreateAccountDto {
                     .registeredAt(accountDto.getRegisteredAt())
                     .build();
         }
-
     }
 }

@@ -1,8 +1,7 @@
 package com.naekang.account.domain;
 
-import com.naekang.account.exception.AccountException;
-import com.naekang.account.type.AccountStatus;
-import com.naekang.account.type.ErrorCode;
+import com.naekang.account.type.TransactionResultType;
+import com.naekang.account.type.TransactionType;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -13,42 +12,38 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Entity
 @EntityListeners(AuditingEntityListener.class)
-public class Account {
+public class Transaction {
 
     @Id
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
-    private AccountUser accountUser;
-
-    private String accountNumber;
+    @Enumerated(EnumType.STRING)
+    private TransactionType transactionType;
 
     @Enumerated(EnumType.STRING)
-    private AccountStatus accountStatus;
+    private TransactionResultType transactionResultType;
 
-    private Long balance;
+    @ManyToOne
+    private Account account;
 
-    private LocalDateTime registeredAt;
+    private Long amount;
 
-    private LocalDateTime unregisteredAt;
+    private Long balanceSnapshot;
+
+    private String transactionId;
+
+    private LocalDateTime transactedAt;
 
     @CreatedDate
     private LocalDateTime createdAt;
 
     @LastModifiedDate
     private LocalDateTime updatedAt;
-
-    public void useBalance(Long amount) {
-        if (amount > balance) {
-            throw new AccountException(ErrorCode.AMOUNT_EXCEED_BALANCE);
-        }
-        balance -= amount;
-    }
 
 }
