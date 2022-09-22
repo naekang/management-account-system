@@ -62,7 +62,7 @@ public class TransactionService {
             throw new AccountException(ErrorCode.ACCOUNT_ALREADY_UNREGISTERED);
         }
         if (account.getBalance() < amount) {
-            throw new AccountException(ErrorCode.ACCOUNT_ALREADY_UNREGISTERED);
+            throw new AccountException(ErrorCode.AMOUNT_EXCEED_BALANCE);
         }
     }
 
