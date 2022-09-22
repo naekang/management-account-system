@@ -1,5 +1,6 @@
 package com.naekang.account.controller;
 
+import com.naekang.account.dto.CancelBalanceDto;
 import com.naekang.account.dto.UseBalanceDto;
 import com.naekang.account.exception.AccountException;
 import com.naekang.account.service.TransactionService;
@@ -36,6 +37,26 @@ public class TransactionController {
             log.error("Failed to use Balance. ");
 
             transactionService.saveFailedUseTransaction(
+                    request.getAccountNumber(),
+                    request.getAmount()
+            );
+
+            throw e;
+        }
+    }
+
+    @PostMapping("/transaction/cancel")
+    public CancelBalanceDto.Response useBalance(
+            @Valid @RequestBody CancelBalanceDto.Request request
+    ) {
+        try {
+            return CancelBalanceDto.Response.from(
+                    transactionService.cancelBalance(request.getTransactionId(),
+                            request.getAccountNumber(), request.getAmount()));
+        } catch (AccountException e) {
+            log.error("Failed to use Balance. ");
+
+            transactionService.saveFailedCancelTransaction(
                     request.getAccountNumber(),
                     request.getAmount()
             );
