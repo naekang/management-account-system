@@ -1,10 +1,10 @@
 package com.naekang.account.controller;
 
+import com.naekang.account.domain.Account;
 import com.naekang.account.dto.AccountInfoDto;
 import com.naekang.account.dto.CreateAccountDto;
 import com.naekang.account.dto.DeleteAccountDto;
 import com.naekang.account.service.AccountService;
-import com.naekang.account.service.RedisTestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,12 +17,6 @@ import java.util.stream.Collectors;
 public class AccountController {
 
     private final AccountService accountService;
-    private final RedisTestService redisTestService;
-
-    @GetMapping("/get-lock")
-    public String getLock() {
-        return redisTestService.getLock();
-    }
 
     /**
      * 계좌 생성 API
@@ -61,5 +55,11 @@ public class AccountController {
                         .balance(accountDto.getBalance())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    @GetMapping("/account/{id}")
+    public Account getAccount(
+            @PathVariable Long id) {
+        return accountService.getAccount(id);
     }
 }

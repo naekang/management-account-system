@@ -4,8 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.naekang.account.dto.AccountDto;
 import com.naekang.account.dto.CreateAccountDto;
 import com.naekang.account.dto.DeleteAccountDto;
+import com.naekang.account.exception.AccountException;
 import com.naekang.account.service.AccountService;
-import com.naekang.account.service.RedisTestService;
+import com.naekang.account.type.ErrorCode;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -30,9 +31,6 @@ class AccountControllerTest {
 
     @MockBean
     private AccountService accountService;
-
-    @MockBean
-    private RedisTestService redisTestService;
 
     @Autowired
     private MockMvc mockMvc;
@@ -120,6 +118,19 @@ class AccountControllerTest {
                 .andExpect(jsonPath("$[1].balance").value(2000))
                 .andExpect(jsonPath("$[2].accountNumber").value("1111111111"))
                 .andExpect(jsonPath("$[2].balance").value(3000));
+
+    }
+
+    @Test
+    void failGetAccount() throws Exception {
+        given(accountService.getAccount(anyLong()))
+                .willThrow(new AccountException(ErrorCode.ACCOUNT_NOT_FOUND));
+
+        mockMvc.perform(get("/account/876"))
+                .andDo(print())
+                .andExpect(jsonPath("$.errorCode").value("ACCOUNT_NOT_FOUND"))
+                .andExpect(jsonPath("$.errorMessage").value("계좌가 없습니다."))
+                .andExpect(status().isOk());
 
     }
 

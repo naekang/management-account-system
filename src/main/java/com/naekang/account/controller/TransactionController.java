@@ -1,5 +1,6 @@
 package com.naekang.account.controller;
 
+import com.naekang.account.aop.AccountLock;
 import com.naekang.account.dto.CancelBalanceDto;
 import com.naekang.account.dto.QueryTransactionResponseDto;
 import com.naekang.account.dto.UseBalanceDto;
@@ -25,10 +26,12 @@ public class TransactionController {
     private final TransactionService transactionService;
 
     @PostMapping("/transaction/use")
+    @AccountLock
     public UseBalanceDto.Response useBalance(
             @Valid @RequestBody UseBalanceDto.Request request
-    ) {
+    ) throws InterruptedException {
         try {
+            Thread.sleep(3000L);
             return UseBalanceDto.Response.from(
                     transactionService.useBalance(request.getUserId(),
                             request.getAccountNumber(), request.getAmount()));
@@ -45,7 +48,8 @@ public class TransactionController {
     }
 
     @PostMapping("/transaction/cancel")
-    public CancelBalanceDto.Response useBalance(
+    @AccountLock
+    public CancelBalanceDto.Response cancelBalance(
             @Valid @RequestBody CancelBalanceDto.Request request
     ) {
         try {

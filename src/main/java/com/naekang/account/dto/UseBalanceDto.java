@@ -1,5 +1,6 @@
 package com.naekang.account.dto;
 
+import com.naekang.account.aop.AccountLockIdInterface;
 import com.naekang.account.type.TransactionResultType;
 import lombok.*;
 
@@ -10,7 +11,7 @@ public class UseBalanceDto {
 
     @Getter
     @AllArgsConstructor
-    public static class Request {
+    public static class Request implements AccountLockIdInterface {
         @NotNull
         @Min(1)
         private Long userId;
