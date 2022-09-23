@@ -58,4 +58,9 @@ public class Account {
         balance += amount;
     }
 
+    public void deleteAccount() {
+        this.accountStatus = AccountStatus.UNREGISTERED;
+        this.unregisteredAt = LocalDateTime.now();
+    }
+
 }

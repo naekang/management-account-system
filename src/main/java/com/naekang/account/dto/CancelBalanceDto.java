@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 public class CancelBalanceDto {
 
     @Getter
-    @Setter
     @AllArgsConstructor
     public static class Request {
 
@@ -27,7 +26,6 @@ public class CancelBalanceDto {
     }
 
     @Getter
-    @Setter
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder

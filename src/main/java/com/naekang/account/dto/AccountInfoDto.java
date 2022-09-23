@@ -3,7 +3,6 @@ package com.naekang.account.dto;
 import lombok.*;
 
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

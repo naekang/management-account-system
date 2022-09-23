@@ -1,5 +1,6 @@
 package com.naekang.account.service;
 
+import com.naekang.account.controller.AccountController;
 import com.naekang.account.domain.Account;
 import com.naekang.account.domain.AccountUser;
 import com.naekang.account.dto.AccountDto;
@@ -80,8 +81,10 @@ public class AccountService {
 
         validateDeleteAccount(accountUser, account);
 
-        account.setAccountStatus(AccountStatus.UNREGISTERED);
-        account.setUnregisteredAt(LocalDateTime.now());
+//        account.setAccountStatus(AccountStatus.UNREGISTERED);
+//        account.setUnregisteredAt(LocalDateTime.now());
+
+        account.deleteAccount();
 
         accountRepository.save(account);
 

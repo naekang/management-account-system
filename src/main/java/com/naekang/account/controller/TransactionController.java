@@ -1,14 +1,13 @@
 package com.naekang.account.controller;
 
 import com.naekang.account.dto.CancelBalanceDto;
+import com.naekang.account.dto.QueryTransactionResponseDto;
 import com.naekang.account.dto.UseBalanceDto;
 import com.naekang.account.exception.AccountException;
 import com.naekang.account.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -63,6 +62,15 @@ public class TransactionController {
 
             throw e;
         }
+    }
+
+    @GetMapping("/transaction/{transactionId}")
+    public QueryTransactionResponseDto queryTransaction(
+            @PathVariable String transactionId
+    ) {
+        return QueryTransactionResponseDto.from(
+                transactionService.queryTransaction(transactionId)
+        );
     }
 
 }

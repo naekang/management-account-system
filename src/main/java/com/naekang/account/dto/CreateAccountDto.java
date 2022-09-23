@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 public class CreateAccountDto {
 
     @Getter
-    @Setter
     @AllArgsConstructor
     public static class Request {
         @NotNull
@@ -22,7 +21,6 @@ public class CreateAccountDto {
     }
 
     @Getter
-    @Setter
     @NoArgsConstructor
     @AllArgsConstructor
     @Builder
